@@ -17,9 +17,9 @@ func handleRequests() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = myPort
+		fmt.Println("port:" + port)
 	}
-	fmt.Println("port:" + port)
-	err := http.ListenAndServe(":" + port, router)
+	err := http.ListenAndServe(":"+port, router)
 	log.Fatal(err)
 }
 
@@ -29,9 +29,7 @@ func routes(w http.ResponseWriter, r *http.Request) {
 	myResponse := MyResponse{}
 	setupSource(&myResponse, r)
 	setupRoutes(&myResponse, r)
-
 	sort.Sort(myResponse.Routes)
-
 	json.NewEncoder(w).Encode(myResponse)
 }
 
@@ -39,9 +37,8 @@ func setupDurationAndDistance(myResponse *MyResponse, index int) {
 	url := getOSMRUrl(myResponse.Source, myResponse.Routes[index].Destination)
 
 	response, err := http.Get(url)
-
 	if err != nil {
-		fmt.Print(err)
+		fmt.Println(err)
 		myResponse.Err = err.Error()
 		return
 	} else {
