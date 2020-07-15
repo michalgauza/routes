@@ -7,14 +7,19 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"sort"
 )
 
 func handleRequests() {
 	router := mux.NewRouter()
 	router.HandleFunc(routesPath, routes)
-	fmt.Println("started on http://localhost:" + address)
-	err := http.ListenAndServe(address, router)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = myPort
+	}
+	fmt.Println("started on http://localhost:" + myPort)
+	err := http.ListenAndServe(":"+myPort, router)
 	log.Fatal(err)
 }
 

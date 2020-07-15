@@ -1,1 +1,1 @@
-"web: routes main.go"
+"web: routes"
