@@ -18,8 +18,8 @@ func handleRequests() {
 	if port == "" {
 		port = myPort
 	}
-	fmt.Println("started on http://localhost:" + myPort)
-	err := http.ListenAndServe(":"+myPort, router)
+	fmt.Println("port:" + port)
+	err := http.ListenAndServe(":" + port, router)
 	log.Fatal(err)
 }
 
